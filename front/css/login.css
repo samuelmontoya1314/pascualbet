@@ -1,0 +1,298 @@
+/* ===== Base ===== */
+:root{
+  --bg:#0e1217; --panel:#171e27; --panel-2:#1b2430;
+  --text:#e6ecf3; --muted:#9fb0c3;
+  --primary:#3ba0ff; --primary-2:#2a7dd8;
+  --input:#0f1620; --border:#223042;
+  --shadow: 0 16px 40px rgba(0,0,0,.45);
+}
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{ height:100%; }
+body{
+  font-family:"Press Start 2P", monospace, sans-serif;
+  background: radial-gradient(1200px 800px at 20% -10%, #0f1824 0%, var(--bg) 55%) fixed;
+  color:var(--text);
+}
+.page{ min-height:100%; display:grid; align-content:center; justify-items:center; padding:40px 16px; text-align:center;
+  background-image: url('/img/fondo.png'); 
+  background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  min-height: 100vh; /* Asegura que el fondo cubra toda la altura de la pantalla */
+}
+
+/* ===== Hero ===== */
+.hero{ margin-bottom:28px; text-align:center; }
+.avatar{
+  width:220px; height:220px; object-fit:cover;
+  border-radius:12px; border:3px solid var(--border);
+  box-shadow:var(--shadow); margin:0 auto 18px;
+}
+.title{ line-height:1.6; font-size:16px; }
+.title .brand{ display:block; font-size:24px; margin-top:4px; }
+.flag{ margin-left:8px; font-size:18px; }
+.subtitle{ color:var(--muted); font-size:12px; margin-top:6px; }
+
+/* ===== Card ===== */
+.card{
+  width:min(520px, 100%);
+  background:linear-gradient(180deg, var(--panel), var(--panel-2));
+  border:2px solid var(--border);
+  border-radius:14px; box-shadow:var(--shadow);
+  padding:18px; text-align:left;
+}
+
+/* ===== Tabs ===== */
+.tabs{
+  display:flex; gap:10px; padding:8px;
+  background:rgba(15,22,32,.65);
+  border:2px solid var(--border); border-radius:10px;
+  margin-bottom:16px;
+}
+.tab{
+  flex:1; padding:12px 10px; cursor:pointer; text-align:center;
+  color:#a9b9cc; background:transparent; border:2px solid transparent; border-radius:8px;
+  font-size:10px;
+}
+.tab.is-active{
+  color:var(--text); background:#0d121a; border-color:#2a3a50;
+  box-shadow: inset 0 0 0 2px rgba(59,160,255,.18);
+}
+
+/* ===== Forms ===== */
+.form{ display:grid; gap:16px; }
+.form[hidden]{ display:none !important; }
+.field{ display:grid; gap:8px; }
+.label{ font-size:10px; color:#bcd; }
+.input{
+  width:100%; padding:14px 12px;
+  color:var(--text); background:var(--input);
+  border:2px solid #182333; border-radius:8px; font-size:10px;
+}
+.input::placeholder{ color:#7b91aa; font-size:10px; font-family:"Press Start 2P", monospace, sans-serif; }
+.input:focus{ border-color:#31527a; box-shadow:0 0 0 3px rgba(59,160,255,.18); outline:none; }
+
+/* Date */
+.date-input{ position:relative; }
+.date-input .icon{
+  position:absolute; left:10px; top:50%; transform:translateY(-50%);
+  pointer-events:none; opacity:.85;
+}
+.input-date{
+  padding-left:34px;
+  /* hace que los controles nativos usen el tema oscuro donde se soporta */
+  color-scheme: dark;
+  appearance: none;
+}
+/* Texto del campo fecha: tenue cuando está vacío */
+.input-date::-webkit-datetime-edit{ color: var(--muted); }
+.input-date.filled::-webkit-datetime-edit{ color: var(--text); }
+/* Indicador del calendario (Chrome/Edge/Safari) */
+.input-date::-webkit-calendar-picker-indicator{
+  filter: invert(1) opacity(.9);
+  cursor: pointer;
+}
+
+/* Checkbox términos: alinear verticalmente */
+.terms{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.chk{ display:flex; align-items:center; gap:8px; font-size:10px; color:#bcd; line-height:1.2; }
+.chk input{
+  width:16px; height:16px;
+  margin:0; /* quita margen superior que la “empuja” hacia abajo */
+  accent-color:#3ba0ff;
+  transform:none;
+}
+
+/* ===== Términos ===== */
+.terms{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.chk{ display:flex; align-items:flex-start; gap:8px; font-size:10px; color:#bcd; }
+.chk input{ width:14px; height:14px; margin-top:2px; accent-color:#3ba0ff; }
+
+/* ===== Botones / Links ===== */
+.btn{
+  width:100%; padding:14px; border-radius:8px; border:none; cursor:pointer;
+  font-size:14px; letter-spacing:1px; color:#ffffff;
+}
+.btn-primary{ background:linear-gradient(180deg, var(--primary), var(--primary-2)); box-shadow:0 8px 22px rgba(59,160,255,.3); }
+.btn-primary:hover{ filter:brightness(1.08); }
+.btn-primary:disabled{ opacity:.45; cursor:not-allowed; filter:grayscale(.15); }
+
+.alt{ margin-top:6px; font-size:10px; color:rgb(253, 253, 253); text-align:center; }
+.link{ color:#3b91e2; text-decoration:none; border-bottom:1px solid transparent; }
+.link:hover{ border-bottom-color:#9fd1ff; }
+.link-inline{ background:none; border:none; padding:0; cursor:pointer; font:inherit; color:#0084ff; }
+
+/* ===== Modal ===== */
+.modal[hidden]{ display:none !important; }
+.modal{ position:fixed; inset:0; display:grid; place-items:center; background:rgba(2,6,12,.55); z-index:50; }
+.modal-box{ width:min(720px, 95%); background:#121923; border:2px solid var(--border); border-radius:12px; box-shadow:var(--shadow); overflow:hidden; }
+.modal-header{ display:flex; align-items:center; justify-content:space-between; padding:12px 14px; border-bottom:2px solid var(--border); }
+.modal-header h3{ font-size:14px; }
+.icon-btn{ width:32px; height:32px; border-radius:8px; display:grid; place-items:center; background:#0f1620; border:2px solid var(--border); color:rgb(77, 114, 236); cursor:pointer; }
+.modal-body{ padding:14px; font-size:14px; color:#ffffff; }
+.modal-body.scroll{ max-height:50vh; overflow:auto; }
+.modal-footer{ padding:12px 14px; border-top:2px solid var(--border); display:flex; justify-content:flex-end; gap:10px; }
+
+
+/* ===== Responsive ===== */
+@media (max-width: 900px){
+  .avatar{ width:200px; height:200px; }
+}
+@media (max-width: 600px){
+  .avatar{ width:100px; height:100px; }
+  .card{ width:min(100%, 420px); }
+}
+/* ==== ACCENT PINK THEME (hover/focus) ==== */
+:root{
+  --accent: #ff4fa3;          /* rosa principal */
+  --accent-2: #ff2c98;        /* rosa más oscuro (gradiente) */
+  --accent-glow: rgba(255,79,163,.28);
+  --accent-bg: rgba(255,79,163,.16); /* fondo suave para inputs al hover */
+}
+
+/* Suaviza transiciones de todos los elementos interactivos */
+.input, .btn, .tab, .link, .icon-btn, .avatar, .chk input {
+  transition: background .18s ease, border-color .18s ease,
+              box-shadow .18s ease, color .18s ease, transform .06s ease;
+}
+
+/* ===== Inputs (incluye date) ===== */
+.input:hover,
+.input:focus {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+  outline: none;
+}
+.input:active { transform: translateY(1px); }
+
+/* Date específico */
+.input-date{
+  padding-left:34px;
+  color-scheme: dark; /* controles nativos en modo oscuro */
+  appearance: none;
+}
+.input-date::-webkit-datetime-edit { color: var(--muted); }
+.input-date.filled::-webkit-datetime-edit { color: var(--text); }
+.input-date::-webkit-calendar-picker-indicator{
+  filter: invert(1) saturate(1.2);
+  opacity:.95;
+  cursor:pointer;
+}
+.date-input .icon{ opacity: .95; } 
+
+/* ===== Tabs ===== */
+.tab:hover{
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 2px var(--accent-glow);
+  background: rgba(255,79,163,.08);
+  color: var(--text);
+}
+.tab.is-active{
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 2px var(--accent-glow);
+}
+
+/* ===== Links ===== */
+.link, .link-inline { color:#9fd1ff; }
+.link:hover, .link-inline:hover{
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ===== Checkbox (términos) ===== */
+.chk{ align-items:center; line-height:1.2; }
+.chk input{
+  width:16px; height:16px; margin:0;
+  accent-color: var(--accent);
+}
+.chk:hover span{ color: var(--text); }
+
+/* ===== Botón primario ===== */
+/* Azul por defecto; al hover se vuelve rosa y “brilla” */
+.btn-primary{
+  background: linear-gradient(180deg, var(--primary), var(--primary-2));
+  color:#fff;
+  box-shadow: 0 8px 22px rgba(59,160,255,.3);
+}
+.btn-primary:hover{
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  box-shadow: 0 10px 26px var(--accent-glow);
+}
+.btn-primary:active{ transform: translateY(1px); }
+.btn-primary:disabled{
+  opacity:.45; cursor:not-allowed; filter:grayscale(.15);
+}
+
+/* ===== Modal buttons/icons ===== */
+.icon-btn:hover{
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* ===== Card polish ===== */
+.card{
+  backdrop-filter: blur(4px);
+  border-color: rgba(34,48,66,.9);
+}
+.card:hover{
+  border-color: rgba(255,79,163,.35);
+  box-shadow: 0 16px 40px rgba(0,0,0,.55);
+}
+
+/* ===== Focus accesible con teclado ===== */
+:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-glow);
+  border-radius: 10px;
+}
+/* ===== Lista de términos en el modal ===== */
+#terms-modal .modal-body ol{
+  list-style: decimal;          /* mostrar números */
+  padding-left: 40px;           /* sangría para los números */
+  margin: 10px 0 0;
+  display: grid;                /* espaciado limpio entre ítems */
+  gap: 8px;                     /* separa cada <li> */
+  font-size: 10px;              /* combina con la fuente pixel */
+  text-align: left;
+}
+
+/* color de los números (si quieres rosa) */
+#terms-modal .modal-body li::marker{
+  color: var(--accent, #ff4fa3);
+  font-weight: 700;
+}
+
+/* altura de línea para mejor lectura */
+#terms-modal .modal-body li{
+  line-height: 1.5;
+}
+/* Fuerza Press Start 2P en controles y botones */
+button,
+.btn,
+.btn-primary,
+#accept-terms-modal,
+.icon-btn,
+.tab,
+input,
+select,
+textarea,
+.link,
+.modal-footer .btn {
+  font-family: "Press Start 2P", monospace, sans-serif !important;
+  font-weight: 400;
+  letter-spacing: .5px;
+}
+
+/* Evita estilo nativo que ignora la fuente en algunos navegadores */
+button, .btn, .icon-btn, input[type="button"], input[type="submit"]{
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Placeholders con la misma fuente (por si acaso) */
+::placeholder{
+  font-family: "Press Start 2P", monospace, sans-serif !important;
+}
+
