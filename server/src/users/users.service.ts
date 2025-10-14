@@ -1,5 +1,5 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { supabase } from 'src/db/supa.client';
+import { supabase } from '../db/supa.client';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()
