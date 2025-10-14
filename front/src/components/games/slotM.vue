@@ -165,6 +165,8 @@
 
 <script>
 import { balance, syncBalance } from '../../store/balance.js';
+import { registerBet, GAME_IDS } from '../../utils/betApi.js';
+
 export default {
   name: 'SlotMachine',
   setup() {
@@ -507,11 +509,11 @@ export default {
     async checkWin() {
       const combination = this.reels.join(' ');
       const payout = this.paytable[combination];
-      let resultado = 'PERDIDO';
+      let resultado = 'PERDIDA';
       let multiplicador = 0;
 
       if (payout) {
-        resultado = 'GANADO';
+        resultado = 'GANADA';
         multiplicador = payout;
         this.lastWin = this.currentBet * multiplicador;
         this.winMessage = `¡${combination}!`;
@@ -522,23 +524,25 @@ export default {
 
         const pairs = Object.entries(counts).filter(([symbol, count]) => count >= 2);
         if (pairs.length > 0) {
-          resultado = 'GANADO';
+          resultado = 'GANADA';
           multiplicador = 0.5;
           this.lastWin = Math.floor(this.currentBet * multiplicador);
           this.winMessage = '¡Par ganador!';
         }
       }
 
-      // Llamada única a la API al final de la jugada
+      // Registrar apuesta usando la función helper
       try {
-        await fetch('https://pascualbet-cvr6.vercel.app/api/bet/create', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ uid: this.uid, id_juego: 2, monto: this.currentBet, resultado, multiplicador })
+        await registerBet({
+          uid: this.uid,
+          gameId: GAME_IDS.SLOTS,
+          amount: this.currentBet,
+          result: resultado,
+          multiplier: multiplicador
         });
         await syncBalance();
       } catch (error) {
-        alert(`Error al registrar la apuesta: ${error.message}`);
+        console.error('Error al registrar la apuesta:', error);
       }
     },
 

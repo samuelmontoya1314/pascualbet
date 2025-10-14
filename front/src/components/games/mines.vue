@@ -110,6 +110,7 @@ import { useRouter } from 'vue-router';
 import * as Tone from 'tone';
 // Importa el saldo global y las funciones de sincronización
 import { balance, syncBalance } from '../../store/balance.js';
+import { registerBet, GAME_IDS } from '../../utils/betApi.js';
 
 // --- State ---
 const gridDimension = ref(5); // 5 for 5x5, 3 for 3x3, etc.
@@ -253,11 +254,13 @@ async function onTileClick(index) {
     gameState.value = 'busted';
     revealAllMines();
 
-    // Finalizar la apuesta como PERDIDA en un solo paso
-    await fetch('https://pascualbet-cvr6.vercel.app/api/bet/create', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ uid: uid.value, id_juego: 5, monto: betAmount.value, resultado: 'PERDIDO', multiplicador: 0 })
+    // Registrar apuesta PERDIDA usando la función helper
+    await registerBet({
+      uid: uid.value,
+      gameId: GAME_IDS.MINES,
+      amount: betAmount.value,
+      result: 'PERDIDA',
+      multiplier: 0
     });
     await syncBalance();
 
@@ -288,11 +291,13 @@ async function cashout() {
   const winnings = betAmount.value * currentMultiplier.value;
   const multiplier = currentMultiplier.value;
 
-  // Finalizar la apuesta como GANADA en un solo paso
-  await fetch('https://pascualbet-cvr6.vercel.app/api/bet/create', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ uid: uid.value, id_juego: 5, monto: betAmount.value, resultado: 'GANADO', multiplicador: multiplier })
+  // Registrar apuesta GANADA usando la función helper
+  await registerBet({
+    uid: uid.value,
+    gameId: GAME_IDS.MINES,
+    amount: betAmount.value,
+    result: 'GANADA',
+    multiplier: multiplier
   });
   await syncBalance();
 

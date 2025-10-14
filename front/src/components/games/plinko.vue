@@ -129,6 +129,7 @@
 import { ref, reactive, computed, watch, onMounted, onUnmounted } from "vue";
 import { useRouter } from 'vue-router';
 import { balance, updateBalance, syncBalance } from '../../store/balance.js';
+import { registerBet, GAME_IDS } from '../../utils/betApi.js';
 import * as Tone from 'tone';
 
 // --- Funciones de Lógica y Probabilidad (integradas desde plinko-logic.js) ---
@@ -408,13 +409,16 @@ export default {
           if (winningBucket) {
             const winAmount = betAmount.value * winningBucket.multiplier;
             totalWinThisRound.value += winAmount;
-            const resultado = winAmount > 0 ? 'GANADO' : 'PERDIDO';
+            const resultado = winAmount > betAmount.value ? 'GANADA' : 'PERDIDA';
 
             try {
-              await fetch('https://pascualbet-cvr6.vercel.app/api/bet/create', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ uid: uid.value, id_juego: 4, monto: betAmount.value, resultado, multiplicador: winningBucket.multiplier })
+              // Registrar la apuesta usando la función helper
+              await registerBet({
+                uid: uid.value,
+                gameId: GAME_IDS.PLINKO,
+                amount: betAmount.value,
+                result: resultado,
+                multiplier: winningBucket.multiplier
               });
               await syncBalance();
             } catch (e) {

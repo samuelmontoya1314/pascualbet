@@ -169,6 +169,8 @@
 
 <script>
 import { balance, syncBalance } from '../../store/balance.js';
+import { registerBet, GAME_IDS } from '../../utils/betApi.js';
+
 export default {
   setup() {
     return { ...balance };
@@ -377,10 +379,13 @@ export default {
       this.gameOver = true;
       this.resultMessage = message;
 
-      await fetch('https://pascualbet-cvr6.vercel.app/api/bet/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ uid: this.uid, id_juego: 3, monto: this.betAmount, resultado, multiplicador })
+      // Registrar apuesta usando la función helper
+      await registerBet({
+        uid: this.uid,
+        gameId: GAME_IDS.BLACKJACK,
+        amount: this.betAmount,
+        result: resultado === 'EMPATE' ? 'GANADA' : resultado, // EMPATE se considera ganancia (devuelve apuesta)
+        multiplier: multiplicador
       });
       await syncBalance();
 

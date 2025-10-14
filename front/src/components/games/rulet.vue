@@ -248,6 +248,8 @@
 
 <script>
 import { balance, syncBalance } from '../../store/balance.js';
+import { registerBet, GAME_IDS } from '../../utils/betApi.js';
+
 export default {
   name: 'Roulette',
   setup() {
@@ -586,26 +588,20 @@ export default {
       
       this.lastWin = totalWin > 0 ? totalWin - this.totalBet : 0; // Ganancia neta
 
-      // Con el nuevo SP, creamos y finalizamos la apuesta en un solo paso
-      const betResult = totalWin > this.totalBet ? 'GANADO' : (totalWin === this.totalBet ? 'EMPATE' : 'PERDIDO');
+      // Determinar resultado de la apuesta
+      const betResult = totalWin > this.totalBet ? 'GANADA' : (totalWin === this.totalBet ? 'GANADA' : 'PERDIDA');
 
       try {
-        const res = await fetch('https://pascualbet-cvr6.vercel.app/api/bet/create', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            uid: this.uid,
-            id_juego: 1, // ID para Ruleta
-            monto: this.totalBet,
-            resultado: betResult,
-            multiplicador: highestMultiplier
-          })
+        // Registrar apuesta usando la función helper
+        await registerBet({
+          uid: this.uid,
+          gameId: GAME_IDS.RULETA,
+          amount: this.totalBet,
+          result: betResult,
+          multiplier: highestMultiplier
         });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Error al registrar la apuesta.');
-        // No necesitamos guardar el id_sesion porque ya no hay un segundo paso.
       } catch (error) {
-        alert(`Error: ${error.message}`);
+        console.error('Error al registrar apuesta:', error);
       }
       
       await syncBalance(); // Sincronizar saldo para reflejar la ganancia/pérdida

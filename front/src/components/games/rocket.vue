@@ -105,6 +105,7 @@ import { useRouter } from 'vue-router';
 import * as Tone from 'tone';
 // Importa el saldo global y las funciones de sincronización
 import { balance, syncBalance } from '../../store/balance.js';
+import { registerBet, GAME_IDS } from '../../utils/betApi.js';
 
 // --- State ---
 // Usar el saldo global reactivo
@@ -192,12 +193,17 @@ async function cashOut(multiplier) {
   if (hasPlacedBet.value && !hasCashedOut.value) {
     hasCashedOut.value = true;
     const winnings = betAmount.value * multiplier;
-    await fetch('https://pascualbet-cvr6.vercel.app/api/bet/create', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ uid: uid.value, id_juego: 6, monto: betAmount.value, resultado: 'GANADO', multiplicador: multiplier })
+    
+    // Registrar apuesta GANADA usando la función helper
+    await registerBet({
+      uid: uid.value,
+      gameId: GAME_IDS.ROCKET,
+      amount: betAmount.value,
+      result: 'GANADA',
+      multiplier: multiplier
     });
     await syncBalance();
+    
     gameMessage.value = `¡Ganaste $${winnings.toFixed(2)}!`;
   }
 }
@@ -296,10 +302,14 @@ async function endGame() {
 
   if (hasPlacedBet.value && !hasCashedOut.value) {
     gameMessage.value = `¡Crash! Perdiste $${betAmount.value.toFixed(2)}.`;
-    await fetch('https://pascualbet-cvr6.vercel.app/api/bet/create', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ uid: uid.value, id_juego: 6, monto: betAmount.value, resultado: 'PERDIDO', multiplicador: 0 })
+    
+    // Registrar apuesta PERDIDA usando la función helper
+    await registerBet({
+      uid: uid.value,
+      gameId: GAME_IDS.ROCKET,
+      amount: betAmount.value,
+      result: 'PERDIDA',
+      multiplier: 0
     });
     await syncBalance();
   }
