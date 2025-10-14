@@ -117,11 +117,11 @@ export default {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            uid: this.uid,
-            tipo: 'DEPOSITO',
-            monto: amount,
-            banco: this.depositBank,
-            cuenta_cliente: this.depositAccountNumber
+            p_id_usuario: this.uid,
+            p_tipo_transaccion: 'DEPOSITO',
+            p_monto: amount,
+            p_banco: this.depositBank,
+            p_cuenta_cliente: this.depositAccountNumber
           })
         });
         // 4. Sincronizar el saldo y notificar al usuario
@@ -198,11 +198,11 @@ export default {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            uid: this.uid,
-            tipo: 'RETIRO',
-            monto: amount,
-            banco: this.withdrawBank,
-            cuenta_cliente: this.withdrawAccountNumber
+            p_id_usuario: this.uid,
+            tp_tipo_transaccion: 'RETIRO',
+            p_monto: amount,
+            p_banco: this.withdrawBank,
+            p_cuenta_cliente: this.withdrawAccountNumber
           })
         });
         // 3. Sincronizar el saldo y notificar
