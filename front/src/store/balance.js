@@ -41,7 +41,7 @@ export const syncBalance = async () => {
   if (!session) return;
   const { uid } = JSON.parse(session);
   try {
-    const r = await fetch(`http://localhost:3000/api/users/find/${uid}`);
+    const r = await fetch(`https://pascualbet-cvr6.vercel.app/api/users/find/${uid}`);
     const userInfo = await r.json();
     if (r.ok && userInfo) {
       // Función auxiliar para extraer "saldo" desde distintas formas de respuesta
