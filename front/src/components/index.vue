@@ -199,7 +199,7 @@ export default {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             p_id_usuario: this.uid,
-            tp_tipo_transaccion: 'RETIRO',
+            p_tipo_transaccion: 'RETIRO',
             p_monto: amount,
             p_banco: this.withdrawBank,
             p_cuenta_cliente: this.withdrawAccountNumber
