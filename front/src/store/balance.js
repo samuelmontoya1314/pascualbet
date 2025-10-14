@@ -35,7 +35,7 @@ const state = reactive({
   rol: getSession().rol || 'Usuario' // Añadimos el rol al estado
 });
 
-// Nueva función para sincronizar saldo desde la base de datos 
+// Nueva función para sincronizar saldo desde la base de datos
 export const syncBalance = async () => {
   const session = localStorage.getItem('pb:session');
   if (!session) return;
