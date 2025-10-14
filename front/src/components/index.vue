@@ -113,7 +113,7 @@ export default {
 
       try {
         // 1. Crear la transacción
-        const createData = await safeFetchJSON('https://pascualbet-cvr6.vercel.app/api/transaction/create', {
+        const createData = await safeFetchJSON('https://pascualbet-cvr6.vercel.app/api/apuestas/new', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -194,7 +194,7 @@ export default {
 
       try {
         // 1. Crear la transacción de retiro
-        const createData = await safeFetchJSON('https://pascualbet-cvr6.vercel.app/api/transaction/create', {
+        const createData = await safeFetchJSON('https://pascualbet-cvr6.vercel.app/api/apuestas/new', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
