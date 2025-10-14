@@ -384,7 +384,7 @@ export default {
         uid: this.uid,
         gameId: GAME_IDS.BLACKJACK,
         amount: this.betAmount,
-        result: resultado === 'EMPATE' ? 'GANADA' : resultado, // EMPATE se considera ganancia (devuelve apuesta)
+        result: resultado === 'EMPATE' ? 'GANADO' : resultado, // EMPATE se considera ganancia (devuelve apuesta)
         multiplier: multiplicador
       });
       await syncBalance();

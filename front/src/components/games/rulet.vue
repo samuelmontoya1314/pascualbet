@@ -589,7 +589,7 @@ export default {
       this.lastWin = totalWin > 0 ? totalWin - this.totalBet : 0; // Ganancia neta
 
       // Determinar resultado de la apuesta
-      const betResult = totalWin > this.totalBet ? 'GANADA' : (totalWin === this.totalBet ? 'GANADA' : 'PERDIDA');
+      const betResult = totalWin > this.totalBet ? 'GANADO' : (totalWin === this.totalBet ? 'GANADO' : 'PERDIDA');
 
       try {
         // Registrar apuesta usando la función helper

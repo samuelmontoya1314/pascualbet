@@ -199,7 +199,7 @@ async function cashOut(multiplier) {
       uid: uid.value,
       gameId: GAME_IDS.ROCKET,
       amount: betAmount.value,
-      result: 'GANADA',
+      result: 'GANADO',
       multiplier: multiplier
     });
     await syncBalance();

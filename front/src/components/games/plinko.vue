@@ -409,7 +409,7 @@ export default {
           if (winningBucket) {
             const winAmount = betAmount.value * winningBucket.multiplier;
             totalWinThisRound.value += winAmount;
-            const resultado = winAmount > betAmount.value ? 'GANADA' : 'PERDIDA';
+            const resultado = winAmount > betAmount.value ? 'GANADO' : 'PERDIDA';
 
             try {
               // Registrar la apuesta usando la función helper

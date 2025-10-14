@@ -46,7 +46,7 @@ Llamar a `registerBet()` después de determinar el resultado:
 
 ```javascript
 // Determinar resultado
-const resultado = ganancia > apuesta ? 'GANADA' : 'PERDIDA';
+const resultado = ganancia > apuesta ? 'GANADO' : 'PERDIDA';
 const multiplicador = ganancia / apuesta;
 
 // Registrar apuesta
@@ -74,7 +74,7 @@ await syncBalance();
 
 ```javascript
 const winAmount = betAmount.value * winningBucket.multiplier;
-const resultado = winAmount > betAmount.value ? 'GANADA' : 'PERDIDA';
+const resultado = winAmount > betAmount.value ? 'GANADO' : 'PERDIDA';
 
 await registerBet({
   uid: uid.value,
@@ -103,7 +103,7 @@ async spin() {
   
   // Después de calcular el premio
   const premio = // ... cálculo del premio
-  const resultado = premio > currentBet ? 'GANADA' : 'PERDIDA';
+  const resultado = premio > currentBet ? 'GANADO' : 'PERDIDA';
   const multiplicador = premio / currentBet;
   
   // Registrar apuesta
@@ -132,7 +132,7 @@ async spin() {
 ```javascript
 // Después de determinar el resultado
 const ganancia = // ... cálculo de ganancia
-const resultado = ganancia > apuesta ? 'GANADA' : 'PERDIDA';
+const resultado = ganancia > apuesta ? 'GANADO' : 'PERDIDA';
 const multiplicador = ganancia / apuesta;
 
 await registerBet({
@@ -158,7 +158,7 @@ await syncBalance();
 
 ```javascript
 // Al finalizar la mano
-const resultado = playerWon ? 'GANADA' : 'PERDIDA';
+const resultado = playerWon ? 'GANADO' : 'PERDIDA';
 const multiplicador = playerWon ? (isBlackjack ? 2.5 : 2.0) : 0;
 
 await registerBet({
@@ -191,7 +191,7 @@ async function cashOut() {
     uid: uid.value,
     gameId: GAME_IDS.MINES,
     amount: betAmount.value,
-    result: 'GANADA',
+    result: 'GANADO',
     multiplier: currentMultiplier.value
   });
   
@@ -231,7 +231,7 @@ async function cashOut() {
     uid: uid.value,
     gameId: GAME_IDS.ROCKET,
     amount: betAmount.value,
-    result: 'GANADA',
+    result: 'GANADO',
     multiplier: multiplicador
   });
   
@@ -256,9 +256,9 @@ async function rocketExploded() {
 
 ## ⚠️ Consideraciones Importantes
 
-### 1. **Resultado: 'GANADA' o 'PERDIDA'**
+### 1. **Resultado: 'GANADO' o 'PERDIDA'**
    - Usar exactamente estos valores (el backend los espera así)
-   - 'GANADA' cuando el multiplicador > 1.0
+   - 'GANADO' cuando el multiplicador > 1.0
    - 'PERDIDA' cuando pierde o multiplica por 0
 
 ### 2. **Multiplicador**

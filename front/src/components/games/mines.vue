@@ -296,7 +296,7 @@ async function cashout() {
     uid: uid.value,
     gameId: GAME_IDS.MINES,
     amount: betAmount.value,
-    result: 'GANADA',
+    result: 'GANADO',
     multiplier: multiplier
   });
   await syncBalance();

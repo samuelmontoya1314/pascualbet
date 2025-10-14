@@ -47,7 +47,7 @@ await registerBet({
   uid: this.uid,
   gameId: GAME_IDS.RULETA,
   amount: this.totalBet,
-  result: totalWin > this.totalBet ? 'GANADA' : 'PERDIDA',
+  result: totalWin > this.totalBet ? 'GANADO' : 'PERDIDA',
   multiplier: highestMultiplier
 });
 ```
@@ -69,7 +69,7 @@ await registerBet({
   uid: this.uid,
   gameId: GAME_IDS.SLOTS,
   amount: this.currentBet,
-  result: multiplicador > 0 ? 'GANADA' : 'PERDIDA',
+  result: multiplicador > 0 ? 'GANADO' : 'PERDIDA',
   multiplier: multiplicador
 });
 ```
@@ -91,7 +91,7 @@ await registerBet({
   uid: this.uid,
   gameId: GAME_IDS.BLACKJACK,
   amount: this.betAmount,
-  result: resultado === 'EMPATE' ? 'GANADA' : resultado,
+  result: resultado === 'EMPATE' ? 'GANADO' : resultado,
   multiplier: multiplicador
 });
 ```
@@ -113,7 +113,7 @@ await registerBet({
   uid: uid.value,
   gameId: GAME_IDS.PLINKO,
   amount: betAmount.value,
-  result: winAmount > betAmount.value ? 'GANADA' : 'PERDIDA',
+  result: winAmount > betAmount.value ? 'GANADO' : 'PERDIDA',
   multiplier: winningBucket.multiplier
 });
 ```
@@ -139,12 +139,12 @@ await registerBet({
   multiplier: 0
 });
 
-// Cuando hace cashout (GANADA)
+// Cuando hace cashout (GANADO)
 await registerBet({
   uid: uid.value,
   gameId: GAME_IDS.MINES,
   amount: betAmount.value,
-  result: 'GANADA',
+  result: 'GANADO',
   multiplier: currentMultiplier.value
 });
 ```
@@ -161,12 +161,12 @@ await registerBet({
 // Import agregado
 import { registerBet, GAME_IDS } from '../../utils/betApi.js';
 
-// Cuando hace cashout (GANADA)
+// Cuando hace cashout (GANADO)
 await registerBet({
   uid: uid.value,
   gameId: GAME_IDS.ROCKET,
   amount: betAmount.value,
-  result: 'GANADA',
+  result: 'GANADO',
   multiplier: multiplier
 });
 
@@ -200,7 +200,7 @@ await registerBet({
   uid: uid.value || this.uid,
   gameId: GAME_IDS.NOMBRE_JUEGO,
   amount: montoApuesta,
-  result: 'GANADA' | 'PERDIDA',
+  result: 'GANADO' | 'PERDIDA',
   multiplier: numeroMultiplicador
 });
 
@@ -228,7 +228,7 @@ await syncBalance();
 ### Tests Realizados
 - ✅ No hay errores de compilación en ningún archivo
 - ✅ Imports correctos en todos los juegos
-- ✅ Formato consistente de resultado ('GANADA'/'PERDIDA')
+- ✅ Formato consistente de resultado ('GANADO'/'PERDIDA')
 - ✅ Sincronización de balance después de cada registro
 
 ### Compatibilidad
@@ -276,7 +276,7 @@ await syncBalance();
   "p_id_usuario": "paku",
   "p_id_juego": 1-6,
   "p_monto": 100,
-  "p_resultado": "GANADA" | "PERDIDA",
+  "p_resultado": "GANADO" | "PERDIDA",
   "p_multiplicador": 2.5
 }
 ```

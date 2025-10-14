@@ -513,7 +513,7 @@ export default {
       let multiplicador = 0;
 
       if (payout) {
-        resultado = 'GANADA';
+        resultado = 'GANADO';
         multiplicador = payout;
         this.lastWin = this.currentBet * multiplicador;
         this.winMessage = `¡${combination}!`;
@@ -524,7 +524,7 @@ export default {
 
         const pairs = Object.entries(counts).filter(([symbol, count]) => count >= 2);
         if (pairs.length > 0) {
-          resultado = 'GANADA';
+          resultado = 'GANADO';
           multiplicador = 0.5;
           this.lastWin = Math.floor(this.currentBet * multiplicador);
           this.winMessage = '¡Par ganador!';
