@@ -45,7 +45,7 @@ export default {
         return;
       }
       try {
-        const r = await fetch(`http://localhost:3000/api/users/login`, {
+        const r = await fetch(`https://pascualbet-cvr6.vercel.app/api/users/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id_usuario: uid, contrasena: password })
@@ -116,7 +116,7 @@ export default {
       }
 
       try {
-        const r = await fetch(`http://localhost:3000/api/users/new`, {
+        const r = await fetch(`https://pascualbet-cvr6.vercel.app/api/users/new`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

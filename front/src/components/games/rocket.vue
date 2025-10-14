@@ -192,7 +192,7 @@ async function cashOut(multiplier) {
   if (hasPlacedBet.value && !hasCashedOut.value) {
     hasCashedOut.value = true;
     const winnings = betAmount.value * multiplier;
-    await fetch('http://localhost:4000/api/bet/create', {
+    await fetch('https://pascualbet-cvr6.vercel.app/api/bet/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ uid: uid.value, id_juego: 6, monto: betAmount.value, resultado: 'GANADO', multiplicador: multiplier })
@@ -296,7 +296,7 @@ async function endGame() {
 
   if (hasPlacedBet.value && !hasCashedOut.value) {
     gameMessage.value = `¡Crash! Perdiste $${betAmount.value.toFixed(2)}.`;
-    await fetch('http://localhost:4000/api/bet/create', {
+    await fetch('https://pascualbet-cvr6.vercel.app/api/bet/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ uid: uid.value, id_juego: 6, monto: betAmount.value, resultado: 'PERDIDO', multiplicador: 0 })

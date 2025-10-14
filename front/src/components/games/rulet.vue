@@ -590,7 +590,7 @@ export default {
       const betResult = totalWin > this.totalBet ? 'GANADO' : (totalWin === this.totalBet ? 'EMPATE' : 'PERDIDO');
 
       try {
-        const res = await fetch('http://localhost:4000/api/bet/create', {
+        const res = await fetch('https://pascualbet-cvr6.vercel.app/api/bet/create', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

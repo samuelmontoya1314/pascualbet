@@ -377,7 +377,7 @@ export default {
       this.gameOver = true;
       this.resultMessage = message;
 
-      await fetch('http://localhost:4000/api/bet/create', {
+      await fetch('https://pascualbet-cvr6.vercel.app/api/bet/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ uid: this.uid, id_juego: 3, monto: this.betAmount, resultado, multiplicador })

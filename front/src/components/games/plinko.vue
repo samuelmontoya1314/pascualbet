@@ -411,7 +411,7 @@ export default {
             const resultado = winAmount > 0 ? 'GANADO' : 'PERDIDO';
 
             try {
-              await fetch('http://localhost:4000/api/bet/create', {
+              await fetch('https://pascualbet-cvr6.vercel.app/api/bet/create', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ uid: uid.value, id_juego: 4, monto: betAmount.value, resultado, multiplicador: winningBucket.multiplier })

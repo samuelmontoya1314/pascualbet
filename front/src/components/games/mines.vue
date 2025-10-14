@@ -254,7 +254,7 @@ async function onTileClick(index) {
     revealAllMines();
 
     // Finalizar la apuesta como PERDIDA en un solo paso
-    await fetch('http://localhost:4000/api/bet/create', {
+    await fetch('https://pascualbet-cvr6.vercel.app/api/bet/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ uid: uid.value, id_juego: 5, monto: betAmount.value, resultado: 'PERDIDO', multiplicador: 0 })
@@ -289,7 +289,7 @@ async function cashout() {
   const multiplier = currentMultiplier.value;
 
   // Finalizar la apuesta como GANADA en un solo paso
-  await fetch('http://localhost:4000/api/bet/create', {
+  await fetch('https://pascualbet-cvr6.vercel.app/api/bet/create', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ uid: uid.value, id_juego: 5, monto: betAmount.value, resultado: 'GANADO', multiplicador: multiplier })
