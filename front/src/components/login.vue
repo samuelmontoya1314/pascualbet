@@ -522,7 +522,7 @@ export default {
           </li>
           <li>
             PascualBet se reserva el derecho de enviarle memes ofensivos cada
-            vez que pierda.
+            vez que pierda, no debatible.
           </li>
           <li>
             Si intenta ganar usando astrología, su signo zodiacal será baneado
