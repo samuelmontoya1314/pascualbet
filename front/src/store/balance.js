@@ -1,4 +1,5 @@
 import { reactive, toRefs } from 'vue';
+import { authenticatedFetch } from '../utils/api.js';
 
 /**
  * Obtiene el saldo inicial desde la sesión guardada en localStorage.
@@ -41,7 +42,7 @@ export const syncBalance = async () => {
   if (!session) return;
   const { uid } = JSON.parse(session);
   try {
-    const r = await fetch(`https://pascualbet-cvr6.vercel.app/api/users/find/${uid}`);
+    const r = await authenticatedFetch(`https://pascualbet-cvr6.vercel.app/api/users/find/${uid}`);
     const userInfo = await r.json();
     if (r.ok && userInfo) {
       // Función auxiliar para extraer "saldo" desde distintas formas de respuesta

@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
+import { isSessionValid, getSessionInfo } from '../utils/api.js';
 import index from '../components/index.vue';
 import login from '../components/login.vue';
 import SlotM from '../components/games/slotM.vue';
@@ -11,40 +12,56 @@ import Rocket from '../components/games/rocket.vue';
 import Transaciones from '../components/admin/transaciones.vue';
 import Juegos from '../components/admin/juegos.vue';
 
+// Guard para rutas que requieren autenticación
+const requireAuth = (to, from, next) => {
+  if (!isSessionValid()) {
+    next('/');
+  } else {
+    next();
+  }
+};
+
+// Guard para rutas que requieren rol de administrador
+const requireAdmin = (to, from, next) => {
+  if (!isSessionValid()) {
+    next('/');
+    return;
+  }
+  
+  const session = getSessionInfo();
+  if (!session || session.rol !== 'Administrador') {
+    next('/menu');
+  } else {
+    next();
+  }
+};
+
 const routes = [
   {
     path: '/',
     component: login,
     beforeEnter: (to, from, next) => {
-      const session = localStorage.getItem('pb:session');
-      if (session) {
-        next('/menu'); // Si hay sesión activa, redirige al menú
+      if (isSessionValid()) {
+        next('/menu');
       } else {
-        next(); // Permite el acceso al login
+        next();
       }
     }
   },
   {
     path: '/menu',
     component: index,
-    beforeEnter: (to, from, next) => {
-      const session = localStorage.getItem('pb:session');
-      if (!session) {
-        next('/'); // Si no hay sesión, redirige al login
-      } else {
-        next(); // Permite el acceso al menú
-      }
-    }
+    beforeEnter: requireAuth
   },
-  { path: '/slot', component: SlotM },
-  { path: '/rulete', component: Rulet },
-  { path: '/BJ', component: Blackjack },
-  { path: '/plinko', component: Plinko },
-  { path: '/mines', component: Mines },
-  { path: '/rocket', component: Rocket },
-  { path: '/admin/usuarios', component: Usuarios },
-  { path: '/admin/juegos', component: Juegos },
-  { path: '/admin/transaciones', component: Transaciones }
+  { path: '/slot', component: SlotM, beforeEnter: requireAuth },
+  { path: '/rulete', component: Rulet, beforeEnter: requireAuth },
+  { path: '/BJ', component: Blackjack, beforeEnter: requireAuth },
+  { path: '/plinko', component: Plinko, beforeEnter: requireAuth },
+  { path: '/mines', component: Mines, beforeEnter: requireAuth },
+  { path: '/rocket', component: Rocket, beforeEnter: requireAuth },
+  { path: '/admin/usuarios', component: Usuarios, beforeEnter: requireAdmin },
+  { path: '/admin/juegos', component: Juegos, beforeEnter: requireAdmin },
+  { path: '/admin/transaciones', component: Transaciones, beforeEnter: requireAdmin }
 ];
 
 const router = createRouter({

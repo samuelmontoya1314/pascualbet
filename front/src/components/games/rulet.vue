@@ -590,6 +590,7 @@ export default {
 
       // Determinar resultado de la apuesta
       const betResult = totalWin > this.totalBet ? 'GANADA' : (totalWin === this.totalBet ? 'GANADA' : 'PERDIDA');
+      const netWin = totalWin - this.totalBet; // Puede ser negativo si perdió
 
       try {
         // Registrar apuesta usando la función helper
@@ -598,7 +599,8 @@ export default {
           gameId: GAME_IDS.RULETA,
           amount: this.totalBet,
           result: betResult,
-          multiplier: highestMultiplier
+          multiplier: highestMultiplier,
+          netWin: netWin
         });
       } catch (error) {
         console.error('Error al registrar apuesta:', error);

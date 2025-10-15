@@ -410,6 +410,7 @@ export default {
             const winAmount = betAmount.value * winningBucket.multiplier;
             totalWinThisRound.value += winAmount;
             const resultado = winAmount > betAmount.value ? 'GANADA' : 'PERDIDA';
+            const netWin = winAmount - betAmount.value; // Ganancia neta (puede ser negativa)
 
             try {
               // Registrar la apuesta usando la función helper
@@ -418,7 +419,8 @@ export default {
                 gameId: GAME_IDS.PLINKO,
                 amount: betAmount.value,
                 result: resultado,
-                multiplier: winningBucket.multiplier
+                multiplier: winningBucket.multiplier,
+                netWin: netWin
               });
               await syncBalance();
             } catch (e) {

@@ -1,5 +1,6 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { ApuestasService } from './apuestas.service';
+import { SessionGuard } from '../auth/session.guard';
 
 // DTO para nueva transacción
 export class NewTransferenceDto {
@@ -18,6 +19,7 @@ export class NewBetDto {
   p_monto: number;
   p_resultado: string;
   p_multiplicador?: number;
+  p_ganancia_neta?: number; // Ganancia neta (puede ser negativa si perdió)
 }
 
 @Controller('api/apuestas')
@@ -25,6 +27,7 @@ export class ApuestasController {
   constructor(private readonly apuestasService: ApuestasService) {}
 
   @Post('/new')
+  @UseGuards(SessionGuard) // Protegido: requiere sesión válida
   async newTransferences(@Body() dto: NewTransferenceDto) {
     const {
       p_id_usuario,
@@ -46,14 +49,16 @@ export class ApuestasController {
   }
 
   @Post('/new/bet')
+  @UseGuards(SessionGuard) // Protegido: requiere sesión válida
   async newBets(@Body() dto: NewBetDto) {
-    const { p_id_usuario, p_id_juego, p_monto, p_resultado, p_multiplicador } = dto;
+    const { p_id_usuario, p_id_juego, p_monto, p_resultado, p_multiplicador, p_ganancia_neta } = dto;
     return this.apuestasService.newBet(
       p_id_usuario,
       p_id_juego,
       p_monto,
       p_resultado,
       p_multiplicador ?? 2.0,
+      p_ganancia_neta ?? 0,
     );
   }
 }

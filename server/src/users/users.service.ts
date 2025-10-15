@@ -1,10 +1,23 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { supabase } from '../db/supa.client';
 import * as bcrypt from 'bcryptjs';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class UsersService {
   private readonly SALT_ROUNDS = 10;
+
+  /**
+   * Genera un token de sesión único y seguro
+   */
+  private generateSessionToken(userId: string): string {
+    const randomBytes = crypto.randomBytes(32).toString('hex');
+    const timestamp = Date.now();
+    return crypto
+      .createHash('sha256')
+      .update(`${userId}-${timestamp}-${randomBytes}`)
+      .digest('hex');
+  }
 
   async create(
     p_id_usuario: string,
@@ -64,7 +77,15 @@ export class UsersService {
         throw new HttpException('No se pudieron encontrar los detalles del usuario después del login.', HttpStatus.NOT_FOUND);
     }
 
-    return userInfo;
+    // 4. Generar token de sesión
+    const sessionToken = this.generateSessionToken(p_id_usuario);
+
+    // 5. Devolver información del usuario con el token
+    return {
+      ...userInfo,
+      sessionToken,
+      expiresAt: Date.now() + (24 * 60 * 60 * 1000) // 24 horas
+    };
   }
 
   /**

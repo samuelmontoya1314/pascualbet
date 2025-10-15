@@ -1,5 +1,6 @@
 <script>
 import { balance, updateBalance, syncBalance } from '../store/balance.js';
+import { registerTransfer } from '../utils/betApi.js';
 import Usuarios from './admin/usuarios.vue';
 import Blackjack from './games/Blackjack.vue';
 import Plinko from './games/plinko.vue';
@@ -70,24 +71,6 @@ export default {
       this.depositAccountNumber = e.target.value.replace(/\D/g, '').slice(0, 16);
     },
     async confirmDeposit() {
-      // Helper para manejar respuestas de fetch de forma segura
-      const safeFetchJSON = async (url, options) => {
-        const response = await fetch(url, options);
-        if (!response.ok) {
-          // Si el servidor devuelve un error (4xx, 5xx), intenta leer el texto del error.
-          const errorText = await response.text();
-          try {
-            // Intenta parsear como JSON si el servidor envía un error JSON
-            const errorJson = JSON.parse(errorText);
-            throw new Error(errorJson.error || `Error del servidor: ${response.status}`);
-          } catch (e) {
-            // Si no es JSON, es probablemente una página de error HTML.
-            throw new Error(`Error del servidor: ${response.status}. La URL puede ser incorrecta.`);
-          }
-        }
-        return response.json();
-      };
-
       const amount = Number(this.depositAmount);
       if (amount > 10000000) {
         this.depositError = "El monto máximo por depósito es $10,000,000.";
@@ -112,20 +95,17 @@ export default {
       this.depositError = "";
 
       try {
-        // 1. Crear la transacción
-        const createData = await safeFetchJSON('https://pascualbet-cvr6.vercel.app/api/apuestas/new', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            p_id_usuario: this.uid,
-            p_tipo_transaccion: 'DEPOSITO',
-            p_monto: amount,
-            p_banco: this.depositBank,
-            p_cuenta_cliente: this.depositAccountNumber
-          })
+        // Registrar depósito usando la función helper
+        await registerTransfer({
+          uid: this.uid,
+          tipo: 'DEPOSITO',
+          monto: amount,
+          banco: this.depositBank,
+          cuenta: this.depositAccountNumber,
+          estado: 'APROBADO'
         });
-        // 4. Sincronizar el saldo y notificar al usuario
-        // 3. Sincronizar el saldo y notificar al usuario
+
+        // Sincronizar el saldo
         await syncBalance();
         alert(`¡Has depositado $${amount.toLocaleString()} con éxito!`);
         this.closeDepositModal();
@@ -151,24 +131,6 @@ export default {
       this.withdrawAccountNumber = e.target.value.replace(/\D/g, '').slice(0, 16);
     },
     async confirmWithdraw() {
-      // Helper para manejar respuestas de fetch de forma segura
-      const safeFetchJSON = async (url, options) => {
-        const response = await fetch(url, options);
-        if (!response.ok) {
-          // Si el servidor devuelve un error (4xx, 5xx), intenta leer el texto del error.
-          const errorText = await response.text();
-          try {
-            // Intenta parsear como JSON si el servidor envía un error JSON
-            const errorJson = JSON.parse(errorText);
-            throw new Error(errorJson.error || `Error del servidor: ${response.status}`);
-          } catch (e) {
-            // Si no es JSON, es probablemente una página de error HTML.
-            throw new Error(`Error del servidor: ${response.status}. La URL puede ser incorrecta.`);
-          }
-        }
-        return response.json();
-      };
-
       const amount = Number(this.withdrawAmount);
       if (!this.withdrawBank) {
         this.withdrawError = "Selecciona un banco.";
@@ -193,19 +155,17 @@ export default {
       this.withdrawError = "";
 
       try {
-        // 1. Crear la transacción de retiro
-        const createData = await safeFetchJSON('https://pascualbet-cvr6.vercel.app/api/apuestas/new', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            p_id_usuario: this.uid,
-            p_tipo_transaccion: 'RETIRO',
-            p_monto: amount,
-            p_banco: this.withdrawBank,
-            p_cuenta_cliente: this.withdrawAccountNumber
-          })
+        // Registrar retiro usando la función helper
+        await registerTransfer({
+          uid: this.uid,
+          tipo: 'RETIRO',
+          monto: amount,
+          banco: this.withdrawBank,
+          cuenta: this.withdrawAccountNumber,
+          estado: 'APROBADO'
         });
-        // 3. Sincronizar el saldo y notificar
+
+        // Sincronizar el saldo
         await syncBalance();
         alert(`¡Has retirado $${amount.toLocaleString()} con éxito!`);
         this.closeWithdrawModal();

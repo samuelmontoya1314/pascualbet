@@ -533,12 +533,15 @@ export default {
 
       // Registrar apuesta usando la función helper
       try {
+        const netWin = resultado === 'GANADA' ? this.lastWin - this.currentBet : -this.currentBet;
+        
         await registerBet({
           uid: this.uid,
           gameId: GAME_IDS.SLOTS,
           amount: this.currentBet,
           result: resultado,
-          multiplier: multiplicador
+          multiplier: multiplicador,
+          netWin: netWin
         });
         await syncBalance();
       } catch (error) {

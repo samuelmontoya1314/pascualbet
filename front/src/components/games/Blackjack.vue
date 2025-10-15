@@ -379,13 +379,17 @@ export default {
       this.gameOver = true;
       this.resultMessage = message;
 
+      // Calcular ganancia neta
+      const netWin = this.betAmount * multiplicador - this.betAmount;
+
       // Registrar apuesta usando la función helper
       await registerBet({
         uid: this.uid,
         gameId: GAME_IDS.BLACKJACK,
         amount: this.betAmount,
         result: resultado === 'EMPATE' ? 'GANADA' : resultado, // EMPATE se considera ganancia (devuelve apuesta)
-        multiplier: multiplicador
+        multiplier: multiplicador,
+        netWin: netWin
       });
       await syncBalance();
 

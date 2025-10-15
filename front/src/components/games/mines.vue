@@ -260,7 +260,8 @@ async function onTileClick(index) {
       gameId: GAME_IDS.MINES,
       amount: betAmount.value,
       result: 'PERDIDA',
-      multiplier: 0
+      multiplier: 0,
+      netWin: -betAmount.value // Perdió la apuesta
     });
     await syncBalance();
 
@@ -290,6 +291,7 @@ async function cashout() {
   if (gameState.value !== 'playing' || diamondsFound.value === 0) return;
   const winnings = betAmount.value * currentMultiplier.value;
   const multiplier = currentMultiplier.value;
+  const netWin = winnings - betAmount.value; // Ganancia neta
 
   // Registrar apuesta GANADA usando la función helper
   await registerBet({
@@ -297,7 +299,8 @@ async function cashout() {
     gameId: GAME_IDS.MINES,
     amount: betAmount.value,
     result: 'GANADA',
-    multiplier: multiplier
+    multiplier: multiplier,
+    netWin: netWin
   });
   await syncBalance();
 

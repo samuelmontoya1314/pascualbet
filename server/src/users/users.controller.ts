@@ -1,5 +1,7 @@
-import { Controller, Get, Post, Put, Delete, Query, Param, Body, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Query, Param, Body, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { SessionGuard } from '../auth/session.guard';
+import { AdminGuard } from '../auth/admin.guard';
 
 // Data Transfer Object for creating a user
 export class CreateUserDto {
@@ -26,6 +28,7 @@ export class UsersController {
   }
 
   @Get('/f')
+  @UseGuards(SessionGuard, AdminGuard) // Protegido: solo administradores
   async findAll(): Promise<{ data: string }> {
     return this.UsersService.findAll();
   }
@@ -50,6 +53,7 @@ export class UsersController {
     );
   }
   @Get('/find/:p_id_usuario')
+  @UseGuards(SessionGuard) // Protegido: requiere sesión válida
   asyncfind(
     @Param('p_id_usuario') p_id_usuario: string
   ){

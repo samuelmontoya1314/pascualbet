@@ -193,6 +193,7 @@ async function cashOut(multiplier) {
   if (hasPlacedBet.value && !hasCashedOut.value) {
     hasCashedOut.value = true;
     const winnings = betAmount.value * multiplier;
+    const netWin = winnings - betAmount.value; // Ganancia neta
     
     // Registrar apuesta GANADA usando la función helper
     await registerBet({
@@ -200,7 +201,8 @@ async function cashOut(multiplier) {
       gameId: GAME_IDS.ROCKET,
       amount: betAmount.value,
       result: 'GANADA',
-      multiplier: multiplier
+      multiplier: multiplier,
+      netWin: netWin
     });
     await syncBalance();
     
@@ -309,7 +311,8 @@ async function endGame() {
       gameId: GAME_IDS.ROCKET,
       amount: betAmount.value,
       result: 'PERDIDA',
-      multiplier: 0
+      multiplier: 0,
+      netWin: -betAmount.value // Perdió la apuesta
     });
     await syncBalance();
   }

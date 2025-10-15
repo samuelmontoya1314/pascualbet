@@ -30,14 +30,16 @@ export class ApuestasService {
     p_id_juego: number,
     p_monto: number,
     p_resultado: string,
-    p_multiplicador?: number
+    p_multiplicador?: number,
+    p_ganancia_neta?: number
   ): Promise<{ data: string }>{
     const { data, error } = await supabase.rpc('usp_apuesta_crear',{
       p_id_usuario,
       p_id_juego,
       p_monto,
       p_resultado,
-      p_multiplicador
+      p_multiplicador,
+      p_ganancia_neta
     })
     if (error) throw new Error(`Supabase error: ${error.message}`);
     return { data: data }

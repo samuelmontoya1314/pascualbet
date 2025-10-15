@@ -88,6 +88,8 @@ export default {
           saldo: data.saldo_actual,
           dob: data.fecha_nacimiento,
           foto: data.foto_perfil,
+          sessionToken: data.sessionToken, // Token de sesión del servidor
+          expiresAt: data.expiresAt, // Timestamp de expiración
           ts: Date.now(),
         };
 
