@@ -54,7 +54,7 @@ async function cashOut() {
     uid: uid.value,
     gameId: GAME_IDS.ROCKET,
     amount: betAmount.value,
-    result: 'GANADA',
+    result: 'GANADO',
     multiplier: currentMultiplier.value
   });
   
@@ -168,7 +168,7 @@ Expected API Call:
     "p_id_usuario": "paku",
     "p_id_juego": 6,
     "p_monto": 100,
-    "p_resultado": "GANADA",
+    "p_resultado": "GANADO",
     "p_multiplicador": 2.5
   }
   
@@ -224,7 +224,7 @@ Expected Result:
      "p_id_usuario": "paku",
      "p_id_juego": 6,
      "p_monto": 100,
-     "p_resultado": "GANADA",
+     "p_resultado": "GANADO",
      "p_multiplicador": 2.5
    }
    ```

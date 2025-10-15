@@ -40,14 +40,14 @@
 #### ✅ **Mines** (Completamente implementado)
 📁 `/front/src/components/games/mines.vue`
 - ✅ Import de `registerBet` y `GAME_IDS`
-- ✅ Registro de apuesta GANADA en `cashout()`
+- ✅ Registro de apuesta GANADO en `cashout()`
 - ✅ Registro de apuesta PERDIDA en `onTileClick()`
 - ✅ Sincronización de balance
 
 #### ✅ **Rocket** (Completamente implementado)
 📁 `/front/src/components/games/rocket.vue`
 - ✅ Import de `registerBet` y `GAME_IDS`
-- ✅ Registro de apuesta GANADA en `cashOut()`
+- ✅ Registro de apuesta GANADO en `cashOut()`
 - ✅ Registro de apuesta PERDIDA en `endGame()`
 - ✅ Sincronización de balance
 
@@ -87,7 +87,7 @@ await registerBet({
   uid: uid.value,           // o this.uid en Options API
   gameId: GAME_IDS.NOMBRE,  // RULETA, BLACKJACK, MINES, ROCKET
   amount: apuesta,
-  result: 'GANADA' o 'PERDIDA',
+  result: 'GANADO' o 'PERDIDA',
   multiplier: ganancia / apuesta
 });
 await syncBalance();
@@ -109,12 +109,12 @@ Buscar: Función que resuelve la mano
 
 ### 💣 **Mines**
 Buscar:
-- `cashOut()` → registrar con 'GANADA'
+- `cashOut()` → registrar con 'GANADO'
 - Cuando pisa mina → registrar con 'PERDIDA'
 
 ### 🚀 **Rocket**
 Buscar:
-- `cashOut()` → registrar con 'GANADA'
+- `cashOut()` → registrar con 'GANADO'
 - Cuando explota → registrar con 'PERDIDA'
 
 ---
@@ -137,7 +137,7 @@ Para probar que funciona:
   "p_id_usuario": "paku",
   "p_id_juego": 4,
   "p_monto": 100,
-  "p_resultado": "GANADA",
+  "p_resultado": "GANADO",
   "p_multiplicador": 2.5
 }
 ```
@@ -146,7 +146,7 @@ Para probar que funciona:
 
 ## ⚠️ Recordatorios Importantes
 
-1. **Resultado siempre en mayúsculas**: `'GANADA'` o `'PERDIDA'`
+1. **Resultado siempre en mayúsculas**: `'GANADO'` o `'PERDIDA'`
 2. **Multiplicador para pérdidas**: usar `0` o `0.0`
 3. **Sincronizar balance**: siempre llamar `await syncBalance()` después
 4. **No interrumpir el juego**: la función ya maneja errores internamente
@@ -194,7 +194,7 @@ Todos los juegos ahora están usando el sistema unificado de registro de apuesta
 **En todos los juegos:**
 1. ✅ Agregado import de `registerBet` y `GAME_IDS`
 2. ✅ Reemplazadas las llamadas `fetch()` directas por `registerBet()`
-3. ✅ Estandarizado el formato de resultado: `'GANADA'` o `'PERDIDA'`
+3. ✅ Estandarizado el formato de resultado: `'GANADO'` o `'PERDIDA'`
 4. ✅ Mantenida la sincronización de balance con `syncBalance()`
 
 ### 📊 Beneficios Logrados
