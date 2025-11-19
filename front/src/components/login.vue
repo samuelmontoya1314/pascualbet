@@ -277,6 +277,7 @@ export default {
             id="login-pwd"
             placeholder="Tu contraseña"
             autocomplete="current-password"
+            maxlength="24"
             @input="validateLoginPassword($event.target.value)"
           />
           <small v-if="loginPasswordError" class="error">{{
@@ -328,6 +329,7 @@ export default {
             placeholder="Crea una contraseña segura"
             autocomplete="new-password"
             required
+            maxlength="24"
             @input="validateSignupPassword($event.target.value)"
           />
           <small v-if="signupPasswordError" class="error">{{
@@ -357,6 +359,7 @@ export default {
             placeholder="Repite la contraseña"
             autocomplete="new-password"
             required
+            maxlength="24"
             @input="validateConfirmPassword()"
           />
           <small v-if="signupConfirmPasswordError" class="error">{{
