@@ -57,8 +57,7 @@ export class ApuestasController {
       p_id_juego,
       p_monto,
       p_resultado,
-      p_multiplicador ?? 2.0,
-      p_ganancia_neta ?? 0,
+      p_multiplicador ?? 2.0
     );
   }
 }
